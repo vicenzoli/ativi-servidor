@@ -1,27 +1,24 @@
 const http = require('http')
-const { soma } = require('./teste')
-
 const PORT = 8000
-
-//criar o bendito do servidor
+const {soma} = require('./teste')
 const server = http.createServer((req, res) => {
-    let valores = (req.url.replace('/', '').replace('?', '')).split('&')
-    "/?a=10&b=20"
-    'a=10&b=20'
-    ['a=10', 'b=20']
-    for (item in valores){
+    const urlCapturada = url.parse(req.url, true)
+    console.log(req.url
+        .replace('/', '')
+    .replace('?', '')
+    .split('&'))
+    let parametros = {}
+    let valores = req.url
+    for(item in valores){
         let chaveValor = valores[item].split('=')
-        parametros[chaveValor[0]] = Number (chaveValor [1])
-        
+        parametros[chaveValor[0]] = Number(chaveValor[1])
     }
-
+    console.log(parametros)
     let resultado = 0
-    res.end(`o valor final é ${resultado}`)
-  
-
+    resultado = soma(parametros.a, parametros.b)
+    res.end(`O valor final é ${resultado}`)
 })
 
-//fazer ele ouvir a bendita da porta 8000
 server.listen(PORT, () => {
-    console.log(`o servidor foi inicializado na porta ${PORT}`)
+    console.log(`ta rodando pai, na porta ${PORT}`)
 })
